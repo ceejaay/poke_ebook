@@ -17,7 +17,17 @@ class MyBot < Ebooks::Bot
   def on_startup
       # Tweet something every 24 hours
       # See https://github.com/jmettraux/rufus-scheduler
-       ["blinky blinky blonko.", "Christmas elves, Phbbbbt!", "All I want for Xmas is blerg"].each {|item| tweet(item) }
+      new_tweet = ""
+      tweet_words = %w{witches brew witches-brew tim-duncan tim duncan spaaaahkle I will now say a list of words Homestar superb owl best thinky blerg there is what can to do go around but the monster mash where orange bear teddy baby babby pound violet  }
+      rand(1..5).times do 
+        new_tweet << tweet_words.sample + " "
+      end
+
+      new_tweet.strip!.capitalize!
+      new_tweet << [".", "?", "!" " #FTW"].sample
+      tweet(new_tweet)
+      
+
       # pictweet("hi", "cuteselfie.jpg")
 
     end
