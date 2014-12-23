@@ -1,11 +1,17 @@
 require 'twitter_ebooks'
+require 'dotenv'
+Dotenv.load
+CONSUMER_KEY = ENV['MY_CONSUMER_KEY']
+SECRET_CONSUMER_KEY = ENV['MY_SECRET_CONSUMER_KEY']
+ACCESS_KEY = ENV['MY_ACCESS_KEY']
+SECRET_ACCESS_KEY = ENV['MY_SECRET_ACCESS_KEY']
 
 
 class MyBot < Ebooks::Bot
   # Configuration here applies to all MyBots
   def configure
-    self.consumer_key = "5XlN7yuNfOKNkwFlCVkkxYm8r"
-    self.consumer_secret = "8dncHO7XK4gZJGTR6JIetvxzhH1HGiBmhyBZISOb8LR5SQOH96"
+    self.consumer_key = CONSUMER_KEY 
+    self.consumer_secret =  SECRET_CONSUMER_KEY 
   end
 
   def on_startup
@@ -38,6 +44,7 @@ class MyBot < Ebooks::Bot
 end
 
 MyBot.new("superbowl3000") do |bot|
-  bot.access_token = "2194383865-M1EfeIOuyN8GFpbKuDdPUNqiy6x84O0mpqrpQty"
-  bot.access_token_secret = "v6Li5YlyarzFzswtOsf090fXsBAJAKQvJDwcv9e11DI9n" 
+  bot.access_token = ACCESS_KEY 
+  bot.access_token_secret = SECRET_ACCESS_KEY
+
 end
