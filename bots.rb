@@ -17,6 +17,7 @@ class MyBot < Ebooks::Bot
   def on_startup
       # Tweet something every 24 hours
       # See https://github.com/jmettraux/rufus-scheduler
+      
       scheduler.every '3h' do
       new_tweet = ""
         tweet_words = %w{witches brew witches-brew tim-duncan tim duncan spaaaahkle I will now say a list of words Homestar superb owl best thinky blerg there is what can to do go around but the monster mash where orange bear teddy baby babby pound violet  }
