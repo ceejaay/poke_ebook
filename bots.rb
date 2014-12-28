@@ -12,6 +12,7 @@ class MyBot < Ebooks::Bot
   def configure
     self.consumer_key = CONSUMER_KEY 
     self.consumer_secret =  SECRET_CONSUMER_KEY 
+        @tweet_words = %w{witches brew witches-brew tim-duncan tim duncan spaaaahkle I will now say a list of words Homestar superb owl best thinky blerg there is what can to do go around but the monster mash where orange bear teddy baby babby pound violet  }
   end
 
   def on_startup
@@ -20,9 +21,8 @@ class MyBot < Ebooks::Bot
       
       scheduler.every '3h' do
       new_tweet = ""
-        tweet_words = %w{witches brew witches-brew tim-duncan tim duncan spaaaahkle I will now say a list of words Homestar superb owl best thinky blerg there is what can to do go around but the monster mash where orange bear teddy baby babby pound violet  }
         rand(1..5).times do 
-          new_tweet << tweet_words.sample + " "
+          new_tweet << @tweet_words.sample + " "
         end
 
         new_tweet.strip!.capitalize!
@@ -47,6 +47,8 @@ class MyBot < Ebooks::Bot
   def on_mention(tweet)
     # Reply to a mention
     # reply(tweet, "oh hullo")
+    reply(tweet, "Oh hai. #{@tweet_words.sample} #greetings")
+    reply(tweet, @tweet_words.sample)
   end
 
   def on_timeline(tweet)
