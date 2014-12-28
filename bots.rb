@@ -47,9 +47,10 @@ class MyBot < Ebooks::Bot
   def on_mention(tweet)
     # Reply to a mention
     # reply(tweet, "oh hullo")
-    reply(tweet, "Oh hai. #{@tweet_words.sample} #greetings")
-    reply(tweet, @tweet_words.sample)
-    tweet
+    #reply(tweet, "Oh hai. #{@tweet_words.sample} #greetings")
+    #reply(tweet, @tweet_words.sample)
+    reply(tweet, "Hello, #{tweet.user.name.reverse} #{@tweet_words.sample}.")
+    puts tweet.instance_variables[attrs]
   end
 
   def on_timeline(tweet)
