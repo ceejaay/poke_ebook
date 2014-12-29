@@ -49,8 +49,9 @@ class MyBot < Ebooks::Bot
     # reply(tweet, "oh hullo")
     #reply(tweet, "Oh hai. #{@tweet_words.sample} #greetings")
     #reply(tweet, @tweet_words.sample)
-    reply(tweet, "Hello, #{tweet.user.name.reverse} #{@tweet_words.sample}.")
-    puts tweet.instance_variables[attrs]
+    number = tweet.user.id.to_s
+    reply(tweet, "Hello, #{number.split(//).last(3).join} #{tweet.user.name.reverse} #{@tweet_words.sample}.")
+    puts tweet.user.id
   end
 
   def on_timeline(tweet)
