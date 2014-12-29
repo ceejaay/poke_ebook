@@ -1,5 +1,6 @@
 require 'twitter_ebooks'
 require 'dotenv'
+require 'Pokegem'
 Dotenv.load
 CONSUMER_KEY = ENV['MY_CONSUMER_KEY']
 SECRET_CONSUMER_KEY = ENV['MY_SECRET_CONSUMER_KEY']
@@ -50,8 +51,10 @@ class MyBot < Ebooks::Bot
     #reply(tweet, "Oh hai. #{@tweet_words.sample} #greetings")
     #reply(tweet, @tweet_words.sample)
     number = tweet.user.id.to_s
-    reply(tweet, "Hello, #{number.split(//).last(3).join} #{tweet.user.name.reverse} #{@tweet_words.sample}.")
-    puts tweet.user.id
+    number = number.split(//).last(3).join
+    pokemon = JSON.parse(Pokegem.get "pokemon", number.to_i)
+    reply tweet, "Hello, you are #{pokemon['name']}."
+    #reply(tweet, "Hello, #{number.split(//).last(3).join} #{tweet.user.name.reverse} #{@tweet_words.sample}.")
   end
 
   def on_timeline(tweet)
