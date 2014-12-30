@@ -50,6 +50,7 @@ class MyBot < Ebooks::Bot
     # reply(tweet, "oh hullo")
     #reply(tweet, "Oh hai. #{@tweet_words.sample} #greetings")
     #reply(tweet, @tweet_words.sample)
+    reply(tweet, @tweet_words.sample)
     number = tweet.user.id.to_s
     number = number.split(//).last(3).join
     pokemon = JSON.parse(Pokegem.get "pokemon", number.to_i)
