@@ -1,6 +1,6 @@
 require 'twitter_ebooks'
 require 'dotenv'
-#require 'Pokegem'
+require 'Pokegem'
 Dotenv.load
 CONSUMER_KEY = ENV['MY_CONSUMER_KEY']
 SECRET_CONSUMER_KEY = ENV['MY_SECRET_CONSUMER_KEY']
