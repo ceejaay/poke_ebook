@@ -1,5 +1,7 @@
 require 'twitter_ebooks'
-require 'dotenv'
+#require 'dotenv'
+#require 'colorator'
+
 
 Dotenv.load
 CONSUMER_KEY = ENV['MY_CONSUMER_KEY']
@@ -33,6 +35,7 @@ class MyBot < Ebooks::Bot
 
       # pictweet("hi", "cuteselfie.jpg")
 
+    puts "hello World".red
     end
 
   def on_message(dm)
@@ -46,16 +49,14 @@ class MyBot < Ebooks::Bot
   end
 
   def on_mention(tweet)
-    # Reply to a mention
-    # reply(tweet, "oh hullo")
-    #reply(tweet, "Oh hai. #{@tweet_words.sample} #greetings")
-    #reply(tweet, @tweet_words.sample)
-    reply(tweet, @tweet_words.sample)
     number = tweet.user.id.to_s
     number = number.split(//).last(3).join
-    pokemon = JSON.parse(Pokegem.get "pokemon", number.to_i)
-    reply tweet, "Hello, you are #{pokemon['name']}."
-    #reply(tweet, "Hello, #{number.split(//).last(3).join} #{tweet.user.name.reverse} #{@tweet_words.sample}.")
+    poke_data = Pokegem.get("pokemon", number.to_i)
+    poke_tweet = JSON.parse(poke_data)
+    poke_tweet = poke_tweet['name'] 
+
+    reply(tweet, @tweet_words.sample)
+    reply(tweet, "Hello, you are #{poke_tweet}.")
   end
 
   def on_timeline(tweet)
