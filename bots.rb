@@ -1,7 +1,7 @@
 require 'twitter_ebooks'
-#require 'dotenv'
+require 'dotenv'
 #require 'colorator'
-
+require 'pokegem'
 
 Dotenv.load
 CONSUMER_KEY = ENV['MY_CONSUMER_KEY']
@@ -35,7 +35,7 @@ class MyBot < Ebooks::Bot
 
       # pictweet("hi", "cuteselfie.jpg")
 
-    puts "hello World".red
+    #puts "hello World".red
     end
 
   def on_message(dm)
