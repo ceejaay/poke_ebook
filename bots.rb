@@ -1,7 +1,8 @@
 require 'twitter_ebooks'
 require 'dotenv'
+require 'open-uri'
 #require 'colorator'
-require 'pokegem'
+#require 'pokegem'
 
 Dotenv.load
 CONSUMER_KEY = ENV['MY_CONSUMER_KEY']
@@ -51,11 +52,9 @@ class MyBot < Ebooks::Bot
   def on_mention(tweet)
     number = tweet.user.id.to_s
     number = number.split(//).last(3).join
-    poke_data = Pokegem.get("pokemon", number.to_i)
-    poke_tweet = JSON.parse(poke_data)
-    poke_tweet = poke_tweet['name'] 
-
-    reply(tweet, @tweet_words.sample)
+    poke_data = open("http://pokeapi.co/api/v1/pokemon/#{number}/").read
+    #poke_data = Pokegem.get("pokemon", number.to_i)
+    poke_tweet = JSON.parse(poke_data)["name"]
     reply(tweet, "Hello, you are #{poke_tweet}.")
   end
 
