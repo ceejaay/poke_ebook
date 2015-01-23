@@ -1,6 +1,7 @@
 require 'twitter_ebooks'
 require 'dotenv'
 require 'open-uri'
+#require 'user_hash'
 #require 'colorator'
 #require 'pokegem'
 
@@ -11,6 +12,7 @@ ACCESS_KEY = ENV['MY_ACCESS_KEY']
 SECRET_ACCESS_KEY = ENV['MY_SECRET_ACCESS_KEY']
 
 
+$people_talked_to = {}
 class MyBot < Ebooks::Bot
   # Configuration here applies to all MyBots
   def configure
@@ -23,7 +25,7 @@ class MyBot < Ebooks::Bot
       # Tweet something every 24 hours
       # See https://github.com/jmettraux/rufus-scheduler
       
-      scheduler.every '3h' do
+      scheduler.every '24h' do
       new_tweet = ""
         rand(1..5).times do 
           new_tweet << @tweet_words.sample + " "
@@ -50,10 +52,17 @@ class MyBot < Ebooks::Bot
   end
 
   def on_mention(tweet)
-    number = tweet.user.id.to_s
+    final_number = nil
+    number = tweet.user.to_s
     number = number.split(//).last(3).join
-    poke_data = open("http://pokeapi.co/api/v1/pokemon/#{number}/").read
-    #poke_data = Pokegem.get("pokemon", number.to_i)
+    if number == "000"
+        final_number = "MissingNo"
+      elsif number.to_i > 717
+        final_number = number.to_i - 717
+      else
+        final_number = number
+    end
+    poke_data = open("http://pokeapi.co/api/v1/pokemon/#{final_number}/").read
     poke_tweet = JSON.parse(poke_data)["name"]
     reply(tweet, "Hello, you are #{poke_tweet}.")
   end
@@ -62,6 +71,9 @@ class MyBot < Ebooks::Bot
     # Reply to a tweet in the bot's timeline
     # reply(tweet, "nice tweet")
   end
+  
+  
+
 end
 
 MyBot.new("superbowl3000") do |bot|
@@ -69,3 +81,4 @@ MyBot.new("superbowl3000") do |bot|
   bot.access_token_secret = SECRET_ACCESS_KEY
 
 end
+
