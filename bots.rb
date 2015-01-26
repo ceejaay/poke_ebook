@@ -53,7 +53,7 @@ class MyBot < Ebooks::Bot
 
   def on_mention(tweet)
     final_number = nil
-    number = tweet.user.to_s
+    number = tweet.user.id.to_s
     number = number.split(//).last(3).join
     if number == "000"
         final_number = "MissingNo"
