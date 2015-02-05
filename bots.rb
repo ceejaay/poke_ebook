@@ -53,7 +53,7 @@ class MyBot < Ebooks::Bot
 
   def on_mention(tweet)
     final_number = nil
-    number = tweet.user.to_s
+    number = tweet.user.id.to_s
     number = number.split(//).last(3).join
     if number == "000"
         final_number = "MissingNo"
@@ -65,6 +65,9 @@ class MyBot < Ebooks::Bot
     poke_data = open("http://pokeapi.co/api/v1/pokemon/#{final_number}/").read
     poke_tweet = JSON.parse(poke_data)["name"]
     reply(tweet, "Hello, you are #{poke_tweet}.")
+    
+    $people_talked_to[tweet.user.id] = tweet.user.name
+    puts $people_talked_to
   end
 
   def on_timeline(tweet)
