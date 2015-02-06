@@ -22,9 +22,6 @@ class MyBot < Ebooks::Bot
   end
 
   def on_startup
-      # Tweet something every 24 hours
-      # See https://github.com/jmettraux/rufus-scheduler
-      
       scheduler.every '24h' do
       new_tweet = ""
         rand(1..5).times do 
@@ -35,10 +32,6 @@ class MyBot < Ebooks::Bot
         new_tweet << [".", "?", "!" " #FTW"].sample
         tweet(new_tweet)
       end      
-
-      # pictweet("hi", "cuteselfie.jpg")
-
-    #puts "hello World".red
     end
 
   def on_message(dm)
@@ -55,17 +48,29 @@ class MyBot < Ebooks::Bot
     final_number = nil
     number = tweet.user.id.to_s
     number = number.split(//).last(3).join
-    if number == "000"
-        final_number = "MissingNo"
-      elsif number.to_i > 717
-        final_number = number.to_i - 717
-      else
-        final_number = number
-    end
-    poke_data = open("http://pokeapi.co/api/v1/pokemon/#{final_number}/").read
-    poke_tweet = JSON.parse(poke_data)["name"]
-    reply(tweet, "Hello, you are #{poke_tweet}.")
+
+    if $people_talked_to.has_key?(tweet.user.id)
+       #then tweet gibberish about their pokemon. Incl. type etc.
+       reply(tweet, "Hey, thanks for talking to me.")
+    else
+      #tweet them their pokemon. and add them to the hash.
+        if number == "000"
+            final_number = "MissingNo"
+          elsif number.to_i > 717
+            final_number = number.to_i - 717
+          else
+            final_number = number
+              poke_data = open("http://pokeapi.co/api/v1/pokemon/#{final_number}/").read
+              poke_tweet = JSON.parse(poke_data)["name"]
+              reply(tweet, "Hello, you are #{poke_tweet}.")
+              $people_talked_to[tweet.user.id] = tweet.user.name
+        end
+      end
+    puts $people_talked_to
   end
+
+ 
+
 
   def on_timeline(tweet)
     # Reply to a tweet in the bot's timeline
