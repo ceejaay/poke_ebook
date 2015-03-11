@@ -18,7 +18,6 @@ class MyBot < Ebooks::Bot
   def configure
     self.consumer_key = CONSUMER_KEY 
     self.consumer_secret =  SECRET_CONSUMER_KEY 
-        @tweet_words = %w{witches brew witches-brew tim-duncan tim duncan spaaaahkle I will now say a list of words Homestar superb owl best thinky blerg there is what can to do go around but the monster mash where orange bear teddy baby babby pound violet slid out stylus ruby i_heart_radio bling pills gas relief journey lotion root beer root_beer }
   end
 
   def remove_its(string)
@@ -31,7 +30,7 @@ class MyBot < Ebooks::Bot
      scheduler.every '6h' do
        message = JSON.parse(open("http://pokeapi.co/api/v1/description/#{rand(6609) + 1}/").read)["description"]
       remove_its(message)
-      tweet(message)
+      tweet(message) 
       end
   end
 
