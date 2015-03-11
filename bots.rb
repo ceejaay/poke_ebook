@@ -21,18 +21,19 @@ class MyBot < Ebooks::Bot
         @tweet_words = %w{witches brew witches-brew tim-duncan tim duncan spaaaahkle I will now say a list of words Homestar superb owl best thinky blerg there is what can to do go around but the monster mash where orange bear teddy baby babby pound violet slid out stylus ruby i_heart_radio bling pills gas relief journey lotion root beer root_beer }
   end
 
-  def on_startup
-      scheduler.every '24h' do
-      new_tweet = ""
-        rand(1..5).times do 
-          new_tweet << @tweet_words.sample + " "
-        end
+  def remove_its(string)
+    string.gsub! /\bit\b/i, "you"
+    string.gsub! /\bits\b/i, "your"
+    return string
+  end
 
-        new_tweet.strip!.capitalize!
-        new_tweet << [".", "?", "!" " #FTW"].sample
-        tweet(new_tweet)
-      end      
-    end
+  def on_startup
+     scheduler.every '6h' do
+       message = JSON.parse(open("http://pokeapi.co/api/v1/description/#{rand(6609) + 1}/").read)["description"]
+      remove_its(message)
+      tweet(message)
+      end
+  end
 
   def on_message(dm)
     # Reply to a DM
